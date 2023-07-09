@@ -1,15 +1,15 @@
 {
-    "keep": {
-        "days": true,
-        "amount": 14
-    },
-    "auditLog": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\.53dcfbd16852989e51fb8d2b2dd92dd58f6b76e4-audit.json",
-    "files": [
-        {
-            "date": 1688903255762,
-            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-09-17.log",
-            "hash": "2e973326f88881dd25a9d99f01a194f9737a34b0f45f09d240f07fd1d9a690f4"
-        }
-    ],
-    "hashType": "sha256"
+  "keep": {
+    "days": true,
+    "amount": 14
+  },
+  "auditLog": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\.53dcfbd16852989e51fb8d2b2dd92dd58f6b76e4-audit.json",
+  "files": [
+    {
+      "date": 1688903255762,
+      "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-09-17.log",
+      "hash": "2e973326f88881dd25a9d99f01a194f9737a34b0f45f09d240f07fd1d9a690f4"
+    }
+  ],
+  "hashType": "sha256"
 }
