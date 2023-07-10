@@ -1,7 +1,8 @@
-import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
+import express, { Application, Request, Response } from 'express';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
 // import routers
-import usersRouter from './app/modules/users/users.route';
+import { UserRoutes } from './app/modules/user/user.route';
 
 const app: Application = express();
 
@@ -19,6 +20,18 @@ app.get('/', (req: Request, res: Response) => {
 });
 // application routes
 
-app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/users', UserRoutes);
+
+// global api error handler
+// app.get('/test', async (req: Request, res: Response) => {
+// console.log(y);
+// Promise.reject(new Error('unhandled'));
+//   throw new Error('testin error');
+// });
+// global api error handler
+// app.get('*', (req: Request, res: Response) => {
+//   throw new ApiError(404, 'No routes found');
+// });
+app.use(globalErrorHandler);
 
 export default app;
