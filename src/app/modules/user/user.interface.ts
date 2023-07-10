@@ -8,6 +8,6 @@ export type IUser = {
 
 export type UserModel = Model<
   IUser,
-  object
+  Record<string, unknown>
   //  IUserMethods
 >;
