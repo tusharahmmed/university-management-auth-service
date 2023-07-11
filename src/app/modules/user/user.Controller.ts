@@ -12,6 +12,7 @@ const createUser: RequestHandler = async (req, res, next) => {
       data: result,
     });
   } catch (err) {
+    // pass to global handler
     next(err);
   }
 };
