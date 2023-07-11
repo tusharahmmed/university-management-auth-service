@@ -1,0 +1,62 @@
+ [log] error: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "role"
+    ],
+    "message": "role is required"
+  }
+] at Tue Jul 11 2023 20:44:1
+ [log] error: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "role"
+    ],
+    "message": "role is required"
+  }
+] at Tue Jul 11 2023 20:44:50
+ [log] error: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "role"
+    ],
+    "message": "role is required"
+  }
+] at Tue Jul 11 2023 20:49:50
+ [log] error: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "body",
+      "user",
+      "role"
+    ],
+    "message": "role is required"
+  }
+] at Tue Jul 11 2023 20:51:6
+ [log] error: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "number",
+    "path": [
+      "body",
+      "user",
+      "role"
+    ],
+    "message": "Expected string, received number"
+  }
+] at Tue Jul 11 2023 20:51:48
