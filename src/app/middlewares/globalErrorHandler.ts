@@ -11,9 +11,11 @@ import { errorLogger } from '../../shared/logger';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   // setup logger
-  config.env === 'production'
-    ? errorLogger.error('GlobalErrorHandler ~', error)
-    : console.log('GlobalErrorHandler ~', error);
+  if (config.env !== 'production') {
+    console.log('GlobalErrorHandler ~', error);
+  } else {
+    errorLogger.error('GlobalErrorHandler ~', error);
+  }
 
   // defalut error properties
   let statusCode = 500;

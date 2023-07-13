@@ -19,8 +19,14 @@ const SEMESTER_MONTHS: ISemesterMonths[] = [
   'December',
 ];
 
+const SEMESTER_CODE_MAPER: { [key: string]: string } = {
+  Autumn: '01',
+  Summer: '02',
+  Fall: '03',
+};
 export const AcademicConstant = {
   CODES,
   TITLES,
   SEMESTER_MONTHS,
+  SEMESTER_CODE_MAPER,
 };
