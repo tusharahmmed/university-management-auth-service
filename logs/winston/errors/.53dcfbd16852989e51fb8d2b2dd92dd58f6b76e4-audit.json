@@ -59,6 +59,36 @@
             "date": 1689256873946,
             "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-13-20.log",
             "hash": "4d26cbff2ee9ff2b799d24dbb8ccfc81c8577deb42110bceb65597d510310f3b"
+        },
+        {
+            "date": 1689260433623,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-13-21.log",
+            "hash": "bbb5c52be781fc0b0e85956d4b430e79031167bdbf2095aee447d63e3321764e"
+        },
+        {
+            "date": 1689315533904,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-14-12.log",
+            "hash": "ff3bec3c90f6818d12187f3988774b9f68452c82e11b17c4e5a05524dbcb171f"
+        },
+        {
+            "date": 1689401013948,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-15-12.log",
+            "hash": "8523e6c33f54c1e03dab4276f6bd9ca83723e6a90dc5a2aa86012dae7ec8610e"
+        },
+        {
+            "date": 1689406443017,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-15-13.log",
+            "hash": "a169d4a5930af17307577b62a30b6b7421fb97b0b02d1860b1074d9caffca32d"
+        },
+        {
+            "date": 1689408115186,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-15-14.log",
+            "hash": "e5b1ff674cea8d97907c9edb86b6b6a154732eceb3bf7fec30a45a3246417fec"
+        },
+        {
+            "date": 1689430458963,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-15-20.log",
+            "hash": "cf15b9ece987f4032751b663c6eb0cec1d67484a383f9a2c5b3dc278ffb0aff6"
         }
     ],
     "hashType": "sha256"

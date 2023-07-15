@@ -30,7 +30,9 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
-  } else if (error instanceof ZodError) {
+  }
+  // zod error
+  else if (error instanceof ZodError) {
     const simplifiedError = handleZodError(error);
 
     // replace proerties
