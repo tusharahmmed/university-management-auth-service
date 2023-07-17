@@ -16,6 +16,13 @@ const createFaculty = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// read
+const getAllFaculty = catchAsync(async (req: Request, res: Response) => {
+  const result = await AcademicFacultyService.getAllFaculty();
+
+  sendResponse(res, { statusCode: httpStatus.OK, success: true, data: result });
+});
 export const AcademicFacultyController = {
   createFaculty,
+  getAllFaculty,
 };

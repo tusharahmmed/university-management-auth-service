@@ -12,4 +12,7 @@ router.post(
   AcademicFacultyController.createFaculty,
 );
 
+// read
+router.get('/', AcademicFacultyController.getAllFaculty);
+
 export const AcademicFacultyRoutes = router;

@@ -10,6 +10,14 @@ const createFaculty = async (
   return result;
 };
 
+// read
+const getAllFaculty = async (): Promise<IAcademicFaculty[]> => {
+  const result = await AcademicFaculty.find();
+
+  return result;
+};
+
 export const AcademicFacultyService = {
   createFaculty,
+  getAllFaculty,
 };
