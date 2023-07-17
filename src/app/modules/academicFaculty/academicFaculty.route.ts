@@ -17,6 +17,8 @@ router.patch(
   validateZod(AcademicFacultyZodSchema.updateSchema),
   AcademicFacultyController.updateFaculty,
 );
+// delete
+router.delete('/:id', AcademicFacultyController.deleteFaculty);
 // read
 router.get('/:id', AcademicFacultyController.getSingleFaculty);
 router.get('/', AcademicFacultyController.getAllFaculty);
