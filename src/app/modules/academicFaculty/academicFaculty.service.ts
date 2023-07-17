@@ -81,7 +81,13 @@ const getAllFaculty = async (
   };
 };
 
+// get single faculty
+const getSingleFaculty = async (_id: string) => {
+  const result = await AcademicFaculty.findById(_id);
+  return result;
+};
 export const AcademicFacultyService = {
   createFaculty,
   getAllFaculty,
+  getSingleFaculty,
 };
