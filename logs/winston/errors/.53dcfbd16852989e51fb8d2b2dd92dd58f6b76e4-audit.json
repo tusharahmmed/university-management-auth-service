@@ -99,6 +99,16 @@
             "date": 1689523269959,
             "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-16-22.log",
             "hash": "ca3d4678d59a4d3494f378435b0f4be2450e530a8b05fbcdf91291da8ce72ead"
+        },
+        {
+            "date": 1689530400213,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-17-00.log",
+            "hash": "fa5aac8ac9d4d85f889c4f129f5fbc0fb078563cd5ea5e8687d140b4ac880889"
+        },
+        {
+            "date": 1689567820179,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\errors\\phu-2023-07-17-10.log",
+            "hash": "0c0677fd0a5c13eb13d03b2e5e334aca2fef84280f157004175e781b599d6bc0"
         }
     ],
     "hashType": "sha256"

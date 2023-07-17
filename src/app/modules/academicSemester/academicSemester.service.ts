@@ -120,7 +120,14 @@ const getAllSemesters = async (
     data: result,
   };
 };
+
+const getSingleSemester = async (_id: string) => {
+  const result = await AcademicSemester.findById(_id);
+
+  return result;
+};
 export const AcademicSemesterService = {
   createSemester,
   getAllSemesters,
+  getSingleSemester,
 };
