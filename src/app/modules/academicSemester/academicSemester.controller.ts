@@ -1,4 +1,4 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import httpStatus from 'http-status';
 import { PAGINATION_FIELD } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
@@ -9,7 +9,7 @@ import { AcademicSemesterService } from './academicSemester.service';
 
 // create semester
 const createSemester: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const result = await AcademicSemesterService.createSemester(req?.body);
 
     // send response
@@ -19,14 +19,12 @@ const createSemester: RequestHandler = catchAsync(
       message: 'Successfully created semester',
       data: result,
     });
-
-    next();
   },
 );
 
 // get all semesters
 const getAllSemesters: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     // filters
     const filters = pick(req.query, AcademicConstant.FILTERS_FIELD);
     // pagination
@@ -44,13 +42,12 @@ const getAllSemesters: RequestHandler = catchAsync(
       meta: result.meta,
       data: result.data,
     });
-    next();
   },
 );
 
 // get single semester
 const getSingleSemester: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { id } = pick(req.params, ['id']);
     const result = await AcademicSemesterService.getSingleSemester(
       id as string,
@@ -63,12 +60,32 @@ const getSingleSemester: RequestHandler = catchAsync(
       message: 'Semesters retrieved successfully',
       data: result,
     });
+  },
+);
 
-    next();
+// get single semester
+const updateSemester: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = pick(req.params, ['id']);
+    const payload = req?.body;
+
+    const result = await AcademicSemesterService.updateSemester(
+      id as string,
+      payload,
+    );
+
+    // send response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Semesters updated successfully',
+      data: result,
+    });
   },
 );
 export const AcademicSemesterController = {
   createSemester,
   getAllSemesters,
   getSingleSemester,
+  updateSemester,
 };
