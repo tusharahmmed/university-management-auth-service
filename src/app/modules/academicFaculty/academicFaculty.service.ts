@@ -2,7 +2,11 @@ import { SortOrder } from 'mongoose';
 import { paginationHelper } from '../../../helpers/pagination';
 import { IServiceFunction } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IAcademicFaculty } from './academicFaculty.interface';
+import { FacultyConstants } from './academicFaculty.constants';
+import {
+  IAcademicFaculty,
+  IAcademicFacultyFilters,
+} from './academicFaculty.interface';
 import { AcademicFaculty } from './academicFaculty.model';
 
 // create
@@ -16,8 +20,38 @@ const createFaculty = async (
 
 // read
 const getAllFaculty = async (
+  filters: IAcademicFacultyFilters,
   paginationOptions: IPaginationOptions,
 ): Promise<IServiceFunction<IAcademicFaculty[]>> => {
+  // filtering
+  const { searchTerm, ...filterData } = filters;
+
+  const facultySearchableFields = FacultyConstants.SEARCHABLE_FIELD;
+  const andConditions = [];
+
+  // search in searchable fields
+  if (searchTerm) {
+    andConditions.push({
+      $or: facultySearchableFields.map(field => {
+        return {
+          [field]: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        };
+      }),
+    });
+  }
+
+  // filter for exact match in filtered fields
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
   // pagination
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(paginationOptions);
@@ -27,7 +61,11 @@ const getAllFaculty = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const result = await AcademicFaculty.find()
+  // query conditons
+  const queryCondition =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  const result = await AcademicFaculty.find(queryCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);

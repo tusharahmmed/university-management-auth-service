@@ -4,6 +4,7 @@ import { PAGINATION_FIELD } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import { sendResponse } from '../../../shared/sendResponse';
+import { FacultyConstants } from './academicFaculty.constants';
 import { AcademicFacultyService } from './academicFaculty.service';
 
 // create
@@ -20,11 +21,16 @@ const createFaculty = catchAsync(async (req: Request, res: Response) => {
 
 // read
 const getAllFaculty = catchAsync(async (req: Request, res: Response) => {
-  // pagination
+  // filters
+  const filters = pick(req.query, FacultyConstants.FILTERS_FIELD);
 
+  // pagination
   const paginationOptions = pick(req.query, PAGINATION_FIELD);
 
-  const result = await AcademicFacultyService.getAllFaculty(paginationOptions);
+  const result = await AcademicFacultyService.getAllFaculty(
+    filters,
+    paginationOptions,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
