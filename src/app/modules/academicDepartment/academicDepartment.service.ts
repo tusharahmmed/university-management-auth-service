@@ -2,7 +2,11 @@ import { SortOrder } from 'mongoose';
 import { paginationHelper } from '../../../helpers/pagination';
 import { IServiceFunction } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IAcademicDepartment } from './academicDepartment.interface';
+import { DepartmentConstants } from './academicDepartment.constants';
+import {
+  IAcademicDepartment,
+  IAcademicDepartmentFilters,
+} from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
 
 // create
@@ -17,8 +21,36 @@ const createDepartment = async (
 
 // read
 const getAllDepartments = async (
+  filters: IAcademicDepartmentFilters,
   paginationOptions: IPaginationOptions,
 ): Promise<IServiceFunction<IAcademicDepartment[]>> => {
+  // filtering
+  const { searchTerm, ...filterData } = filters;
+  const andConditions = [];
+
+  // search condition
+  const depatmentSearchableFields = DepartmentConstants.SEARCHABLE_FIELD;
+  if (searchTerm) {
+    andConditions.push({
+      $or: depatmentSearchableFields.map(field => {
+        return {
+          [field]: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        };
+      }),
+    });
+  }
+  // filter condition
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
   // pagination
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(paginationOptions);
@@ -27,7 +59,12 @@ const getAllDepartments = async (
   if (sortBy && sortOrder) {
     sortCondition[sortBy] = sortOrder;
   }
-  const result = await AcademicDepartment.find()
+
+  // query conditons
+  const queryCondition =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  const result = await AcademicDepartment.find(queryCondition)
     .populate('academicFaculty')
     .sort(sortCondition)
     .skip(skip)
