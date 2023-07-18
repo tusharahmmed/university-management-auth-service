@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { PAGINATION_FIELD } from '../../../constants/pagination';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import { sendResponse } from '../../../shared/sendResponse';
 import { AcademicDepartmentService } from './academicDepartment.service';
 
@@ -18,13 +20,19 @@ const createDepartment = catchAsync(async (req: Request, res: Response) => {
 
 // read
 const getAllDepartments = catchAsync(async (req: Request, res: Response) => {
-  const result = await AcademicDepartmentService.getAllDepartments();
+  // pagination
+  const paginationOptions = pick(req.query, PAGINATION_FIELD);
+
+  const result = await AcademicDepartmentService.getAllDepartments(
+    paginationOptions,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Department retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 
