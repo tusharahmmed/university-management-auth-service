@@ -53,8 +53,26 @@ const getSingleDepartment = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// update
+const updateDepartment = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  const result = await AcademicDepartmentService.updateDepartment(
+    id,
+    updatedData,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Department updated successfully',
+    data: result,
+  });
+});
 export const AcademicDepartmentController = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
+  updateDepartment,
 };
