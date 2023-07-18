@@ -19,6 +19,9 @@ router.patch(
   AcademicDepartmentController.updateDepartment,
 );
 
+// delete
+router.delete('/:id', AcademicDepartmentController.deleteDepartment);
+
 // read
 router.get('/:id', AcademicDepartmentController.getSingleDepartment);
 router.get('/', AcademicDepartmentController.getAllDepartments);

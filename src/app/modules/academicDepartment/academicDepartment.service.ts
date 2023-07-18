@@ -102,9 +102,19 @@ const updateDepartment = async (
 
   return result;
 };
+
+// delete
+const deleteDepartment = async (id: string) => {
+  const result = await AcademicDepartment.findByIdAndDelete(id).populate(
+    'academicFaculty',
+  );
+
+  return result;
+};
 export const AcademicDepartmentService = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
   updateDepartment,
+  deleteDepartment,
 };
