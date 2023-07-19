@@ -20,7 +20,7 @@ export type ISemesterMonths =
 
 export type IAcademicSemester = {
   title: ITitles;
-  year: number;
+  year: string;
   code: ICodes;
   startMonth: ISemesterMonths;
   endMonth: ISemesterMonths;

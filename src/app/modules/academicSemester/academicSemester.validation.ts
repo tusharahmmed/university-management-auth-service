@@ -6,12 +6,9 @@ const createSchema = z.object({
     title: z.enum([...AcademicConstant.TITLES] as [string, ...string[]], {
       required_error: 'Title is required',
     }),
-    year: z
-      .number({
-        required_error: 'Year is required',
-      })
-      .min(2000, 'Year must be greater than 1999')
-      .max(2099, 'Year must be smaller than 2099'),
+    year: z.string({
+      required_error: 'Year is required',
+    }),
     code: z.enum([...AcademicConstant.CODES] as [string, ...string[]], {
       required_error: 'Code is required',
     }),
@@ -39,11 +36,9 @@ const updateSchema = z
         })
         .optional(),
       year: z
-        .number({
+        .string({
           required_error: 'Year is required',
         })
-        .min(2000, 'Year must be greater than 1999')
-        .max(2099, 'Year must be smaller than 2099')
         .optional(),
       code: z
         .enum([...AcademicConstant.CODES] as [string, ...string[]], {
