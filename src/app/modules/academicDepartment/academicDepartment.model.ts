@@ -17,7 +17,7 @@ const departmentSchema = new Schema<
     academicFaculty: {
       type: Types.ObjectId,
       required: true,
-      ref: 'academic-faculty',
+      ref: 'Academic-faculty',
     },
   },
   {
@@ -31,4 +31,4 @@ const departmentSchema = new Schema<
 export const AcademicDepartment = model<
   IAcademicDepartment,
   AcademicDepartmentModel
->('academic-department', departmentSchema);
+>('Academic-department', departmentSchema);

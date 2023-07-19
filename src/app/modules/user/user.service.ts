@@ -1,11 +1,25 @@
 import config from '../../../config';
+import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 import { IUser } from './user.interface';
 import User from './user.model';
-import { generateUserId } from './user.utils';
+import { generateFacultyId, generateStudentId } from './user.utils';
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
+  const semester: IAcademicSemester = {
+    title: 'Fall',
+    year: '2025',
+    code: '02',
+    startMonth: 'September',
+    endMonth: 'December',
+  };
+
   // auto generated incremental id
-  const id = await generateUserId();
+  let id = '';
+  if (user.role === 'student') {
+    id = await generateStudentId(semester);
+  } else {
+    id = await generateFacultyId();
+  }
   user.id = id;
 
   // default password

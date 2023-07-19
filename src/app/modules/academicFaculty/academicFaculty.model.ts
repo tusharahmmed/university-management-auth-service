@@ -40,6 +40,6 @@ academicFacultySchema.pre('save', async function (next) {
 
 // create model
 export const AcademicFaculty = model<IAcademicFaculty, AcademicFacultyModel>(
-  'academic-faculty',
+  'Academic-faculty',
   academicFacultySchema,
 );
