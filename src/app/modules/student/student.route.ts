@@ -5,12 +5,18 @@ import { StudentValidation } from './student.validation';
 
 const router = Router();
 
-router.post(
-  '/create-student',
-  validateZod(StudentValidation.createStudentZodSchema),
-  StudentController.createStudent,
+// update
+router.patch(
+  '/:id',
+  validateZod(StudentValidation.updateStudentZodSchema),
+  StudentController.updateStudent,
 );
-router.get('/id', StudentController.getSingleStudent);
+
+// delete
+router.delete('/:id', StudentController.deleteStudent);
+
+// read
+router.get('/:id', StudentController.getSingleStudent);
 router.get('/', StudentController.getAllStudent);
 
 export const StudentRoutes = router;

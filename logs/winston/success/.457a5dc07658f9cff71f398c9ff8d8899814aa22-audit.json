@@ -179,6 +179,31 @@
             "date": 1689931190782,
             "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-15.log",
             "hash": "42300c45b263673264b588ff5238f81a0fad6d1639ebe199972f3f78327ae31b"
+        },
+        {
+            "date": 1689947266004,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-19.log",
+            "hash": "6e3c27535b91f5202a468e977831119e786de4479d3682411ce0f0d7744aade3"
+        },
+        {
+            "date": 1689948042967,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-20.log",
+            "hash": "503ea971ddc1f7c4e6421bc894a4fab6b454c70d9285075a576d0217f1834fa8"
+        },
+        {
+            "date": 1689954171622,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-21.log",
+            "hash": "de6558c3e8f08d9e1b6d0636678cbea3a4de14bcce4097e1f1ac354905d2527f"
+        },
+        {
+            "date": 1689955434144,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-22.log",
+            "hash": "e4d9235e617019c0cc486c46698b45ce11a687d987b0b99fddc39b93645d8de9"
+        },
+        {
+            "date": 1689961801644,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-21-23.log",
+            "hash": "613c562a94beff8aa62ee85fbc49bbc1f3116d56117a44e8baf1ee37ec511d27"
         }
     ],
     "hashType": "sha256"

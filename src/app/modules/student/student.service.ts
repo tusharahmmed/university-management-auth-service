@@ -1,103 +1,102 @@
-import httpStatus from 'http-status';
-import mongoose from 'mongoose';
-import config from '../../../config';
-import ApiError from '../../../errors/ApiError';
-import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
-import { AcademicSemester } from '../academicSemester/academicSemester.model';
-import { IUser } from '../user/user.interface';
-import User from '../user/user.model';
-import { generateStudentId } from '../user/user.utils';
-import { IStudent } from './student.interface';
+import { SortOrder } from 'mongoose';
+import { paginationHelper } from '../../../helpers/pagination';
+import { IServiceFunction } from '../../../interfaces/common';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { StudentConstant } from './student.constants';
+import { IStudent, IStudentFilters } from './student.interface';
 import Student from './student.model';
 
-const createStudent = async (student: IStudent, user: IUser) => {
-  // set password
-  if (!user.password) {
-    user.password = config.defalt_student_pass as string;
-  }
-  // set role
-  user.role = 'student';
-  // get semester for creating id
-  const academicSemester: IAcademicSemester | null =
-    await AcademicSemester.findById(student.academicSemester);
+// get all student
+const getAllStudent = async (
+  filters: IStudentFilters,
+  paginationOptions: IPaginationOptions,
+): Promise<IServiceFunction<IStudent[]>> => {
+  // filtering
+  const { searchTerm, ...filterData } = filters;
 
-  let newUserAllData = null;
-  // initialize session
-  const session = await mongoose.startSession();
+  const studentSearchableFields = StudentConstant.SEARCHABLE_FIELD;
+  const andConditions = [];
 
-  try {
-    // start transaction
-    session.startTransaction();
-    // generate id
-    const id = await generateStudentId(academicSemester);
-    user.id = id;
-    student.id = id;
-
-    // create student
-    const newStudent = await Student.create([student], { session });
-    if (!newStudent.length) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Fail to create student');
-    }
-    // add student id as ref into user
-    user.student = newStudent[0]._id;
-
-    // create user
-    const newUser = await User.create([user], { session });
-
-    if (!newUser.length) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Fail to create user');
-    }
-    newUserAllData = newUser[0];
-
-    // commit & end the session
-    await session.commitTransaction();
-    await session.endSession();
-  } catch (error) {
-    // if error abort & end session
-    await session.abortTransaction();
-    await session.endSession();
-    throw error;
-  }
-
-  // query all populate data
-  if (newUserAllData) {
-    newUserAllData = await User.findOne({ id: newUserAllData.id }).populate({
-      path: 'student',
-      populate: [
-        {
-          path: 'academicSemester',
-        },
-        {
-          path: 'academicDepartment',
-        },
-        {
-          path: 'academicFaculty',
-        },
-      ],
+  // search in searchable fields
+  if (searchTerm) {
+    andConditions.push({
+      $or: studentSearchableFields.map(field => {
+        return {
+          [field]: {
+            $regex: searchTerm,
+            $options: 'i',
+          },
+        };
+      }),
     });
   }
 
-  return newUserAllData;
+  // filter for exact match in filtered fields
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
+
+  // pagination
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions);
+  // sort conditions
+  const sortCondition: { [key: string]: SortOrder } = {};
+  if (sortBy && sortOrder) {
+    sortCondition[sortBy] = sortOrder;
+  }
+
+  // query conditons
+  const queryCondition =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  const result = await Student.find(queryCondition)
+    .sort(sortCondition)
+    .skip(skip)
+    .limit(limit);
+  const total = await Student.count(queryCondition);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
 };
-const getAllStudent = async () => {
-  const result = await Student.find().populate([
+
+// get single student
+const getSingleStudent = async (id: string) => {
+  const result = await Student.findById(id).populate([
     'academicSemester',
     'academicDepartment',
     'academicFaculty',
   ]);
   return result;
 };
-const getSingleStudent = async (id: string) => {
-  const result = await Student.find({ id: id }).populate([
-    'academicSemester',
-    'academicDepartment',
-    'academicFaculty',
-  ]);
+
+// update student
+const updateStudent = async (id: string, updatedData: Partial<IStudent>) => {
+  const result = await Student.findByIdAndUpdate(id, updatedData, {
+    new: true,
+  }).populate(['academicSemester', 'academicDepartment', 'academicFaculty']);
+
+  return result;
+};
+
+// delete student
+const deleteStudent = async (id: string) => {
+  const result = await Student.findByIdAndDelete(id);
   return result;
 };
 
 export const StudentService = {
-  createStudent,
+  updateStudent,
   getAllStudent,
   getSingleStudent,
+  deleteStudent,
 };

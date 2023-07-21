@@ -3,6 +3,15 @@ import { IAcademicDepartment } from '../academicDepartment/academicDepartment.in
 import { IAcademicFaculty } from '../academicFaculty/academicFaculty.interface';
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 
+export type IStudentFilters = {
+  searchTerm?: string;
+  id?: string;
+  bloodGroup?: string;
+  email?: string;
+  contactNo?: string;
+  emergencyContactNo?: string;
+};
+
 export type UserName = {
   firstName: string;
   lastName: string;
