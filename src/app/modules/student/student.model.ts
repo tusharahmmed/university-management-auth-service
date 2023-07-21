@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
+import { StudentConstant } from './student.constants';
 import { IStudent, StudentModel } from './student.interface';
 
-export const studentSchema = new Schema(
+export const studentSchema = new Schema<IStudent, StudentModel>(
   {
     id: { type: String, required: true },
     name: {
@@ -22,7 +23,7 @@ export const studentSchema = new Schema(
     gender: {
       type: String,
       enum: {
-        values: ['male', 'female'],
+        values: StudentConstant.GENDER,
         message: '{VALUE} as gender is not supported',
       },
     },
@@ -50,9 +51,8 @@ export const studentSchema = new Schema(
     },
     bloodGroup: {
       type: String,
-      required: true,
       enum: {
-        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+        values: StudentConstant.BLOOD_GROUP,
         message: '{VALUE} as blood group is not supported',
       },
     },
@@ -111,9 +111,8 @@ export const studentSchema = new Schema(
         },
       },
     },
-    profileImg: {
+    profileImage: {
       type: String,
-      required: true,
     },
     academicSemester: {
       required: true,
