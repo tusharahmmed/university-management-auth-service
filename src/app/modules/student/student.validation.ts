@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import { StudentConstant } from '../student/student.constants';
+import { StudentConstant } from './student.constants';
 
-// zod schema
 const createStudentZodSchema = z.object({
   body: z.object({
     password: z.string().optional(),
@@ -63,6 +62,6 @@ const createStudentZodSchema = z.object({
   }),
 });
 
-export const UserValidation = {
+export const StudentValidation = {
   createStudentZodSchema,
 };

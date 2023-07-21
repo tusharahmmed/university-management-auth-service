@@ -1,15 +1,14 @@
-/* eslint-disable no-useless-catch */
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import config from '../../../config';
 import ApiError from '../../../errors/ApiError';
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
-import { IStudent } from '../student/student.interface';
-import Student from '../student/student.model';
-import { IUser } from './user.interface';
-import User from './user.model';
-import { generateStudentId } from './user.utils';
+import { IUser } from '../user/user.interface';
+import User from '../user/user.model';
+import { generateStudentId } from '../user/user.utils';
+import { IStudent } from './student.interface';
+import Student from './student.model';
 
 const createStudent = async (student: IStudent, user: IUser) => {
   // set password
@@ -80,7 +79,25 @@ const createStudent = async (student: IStudent, user: IUser) => {
 
   return newUserAllData;
 };
+const getAllStudent = async () => {
+  const result = await Student.find().populate([
+    'academicSemester',
+    'academicDepartment',
+    'academicFaculty',
+  ]);
+  return result;
+};
+const getSingleStudent = async (id: string) => {
+  const result = await Student.find({ id: id }).populate([
+    'academicSemester',
+    'academicDepartment',
+    'academicFaculty',
+  ]);
+  return result;
+};
 
-export const UserService = {
+export const StudentService = {
   createStudent,
+  getAllStudent,
+  getSingleStudent,
 };
