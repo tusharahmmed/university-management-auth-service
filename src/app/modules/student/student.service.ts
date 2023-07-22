@@ -74,7 +74,7 @@ const getAllStudent = async (
 
 // get single student
 const getSingleStudent = async (id: string) => {
-  const result = await Student.findById(id).populate([
+  const result = await Student.findOne({ id }).populate([
     'academicSemester',
     'academicDepartment',
     'academicFaculty',
@@ -102,7 +102,7 @@ const updateStudent = async (id: string, payload: Partial<IStudent>) => {
       const nameKey = `name.${key}`; // name.firstName
 
       // append to updatedStduent
-      (updateStudent as any)[nameKey] = name[key as keyof typeof name]; // updatedStudent[name.firstName] = name.firstName
+      (updatedStudent as any)[nameKey] = name[key as keyof typeof name]; // updatedStudent[name.firstName] = name.firstName
     });
   }
 
@@ -114,7 +114,7 @@ const updateStudent = async (id: string, payload: Partial<IStudent>) => {
       const guardianKey = `guardian.${key}`; // guardian.firstName
 
       // append to updatedStduent
-      (updateStudent as any)[guardianKey] =
+      (updatedStudent as any)[guardianKey] =
         guardian[key as keyof typeof guardian];
     });
   }
@@ -127,21 +127,15 @@ const updateStudent = async (id: string, payload: Partial<IStudent>) => {
       const localGuardianKey = `guardian.${key}`; // localGuardian.key
 
       // append to updatedStduent
-      (updateStudent as any)[localGuardianKey] =
+      (updatedStudent as any)[localGuardianKey] =
         localGuardian[key as keyof typeof localGuardian];
     });
   }
 
-  const result = await Student.findOneAndUpdate({ _id: id }, updatedStudent, {
+  const result = await Student.findOneAndUpdate({ id }, updatedStudent, {
     new: true,
   }).populate(['academicSemester', 'academicDepartment', 'academicFaculty']);
 
-  return result;
-};
-
-// delete student
-const deleteStudent = async (id: string) => {
-  const result = await Student.findByIdAndDelete(id);
   return result;
 };
 
@@ -149,5 +143,4 @@ export const StudentService = {
   updateStudent,
   getAllStudent,
   getSingleStudent,
-  deleteStudent,
 };

@@ -2,11 +2,13 @@ import { z } from 'zod';
 import { StudentConstant } from './student.constants';
 
 const updateStudentZodSchema = z.object({
-  name: z.object({
-    firstName: z.string().optional(),
-    middleName: z.string().optional(),
-    lastName: z.string().optional(),
-  }),
+  name: z
+    .object({
+      firstName: z.string().optional(),
+      middleName: z.string().optional(),
+      lastName: z.string().optional(),
+    })
+    .optional(),
   gender: z
     .enum([...StudentConstant.GENDER] as [string, ...string[]])
     .optional(),

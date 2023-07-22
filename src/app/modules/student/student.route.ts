@@ -12,9 +12,6 @@ router.patch(
   StudentController.updateStudent,
 );
 
-// delete
-router.delete('/:id', StudentController.deleteStudent);
-
 // read
 router.get('/:id', StudentController.getSingleStudent);
 router.get('/', StudentController.getAllStudent);

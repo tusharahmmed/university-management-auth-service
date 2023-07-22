@@ -6,7 +6,7 @@ const SEARCHABLE_FIELD = [
   'email',
   'contactNo',
   'name.firstName',
-  'middleName',
+  'name.middleName',
   'name.lastName',
 ];
 const FILTERS_FIELD = [

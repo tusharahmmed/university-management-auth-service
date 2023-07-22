@@ -209,6 +209,11 @@
             "date": 1690011511091,
             "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-22-13.log",
             "hash": "8c617d85726eb365bd2ee861cd3f0acef37e0e0f41613ea54952710f2fa3c7c1"
+        },
+        {
+            "date": 1690032512311,
+            "name": "E:\\courses\\programmingHero\\next-level\\projects\\ph-university\\auth-service\\logs\\winston\\success\\phu-2023-07-22-19.log",
+            "hash": "4be615c2b9c7d174991ae03d5d383281d7e2749b9ac491ee78f546b53734c918"
         }
     ],
     "hashType": "sha256"
