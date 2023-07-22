@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import httpStatus from 'http-status';
 import { SortOrder } from 'mongoose';
+import ApiError from '../../../errors/ApiError';
 import { paginationHelper } from '../../../helpers/pagination';
 import { IServiceFunction } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -80,8 +83,56 @@ const getSingleStudent = async (id: string) => {
 };
 
 // update student
-const updateStudent = async (id: string, updatedData: Partial<IStudent>) => {
-  const result = await Student.findByIdAndUpdate(id, updatedData, {
+const updateStudent = async (id: string, payload: Partial<IStudent>) => {
+  // check existence
+  const exist = await Student.findOne({ id });
+  if (!exist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Student not found');
+  }
+  // destructure payload
+  const { name, guardian, localGuardian, ...studentData } = payload;
+
+  const updatedStudent: Partial<IStudent> = { ...studentData };
+
+  // if name obj exist then append dynamically on updatedStudent
+  // like name.firstName -> {name.firstName} = payload
+
+  if (name && Object.keys(name).length > 0) {
+    Object.keys(name).forEach(key => {
+      const nameKey = `name.${key}`; // name.firstName
+
+      // append to updatedStduent
+      (updateStudent as any)[nameKey] = name[key as keyof typeof name]; // updatedStudent[name.firstName] = name.firstName
+    });
+  }
+
+  // if guardian obj exist then append dynamically on updatedStudent
+  // like guardian.key -> {guardian.key} = payload
+
+  if (guardian && Object.keys(guardian).length > 0) {
+    Object.keys(guardian).forEach(key => {
+      const guardianKey = `guardian.${key}`; // guardian.firstName
+
+      // append to updatedStduent
+      (updateStudent as any)[guardianKey] =
+        guardian[key as keyof typeof guardian];
+    });
+  }
+
+  // if localGuardian obj exist then append dynamically on updatedStudent
+  // like localGuardian.key -> {localGuardian.key} = payload
+
+  if (localGuardian && Object.keys(localGuardian).length > 0) {
+    Object.keys(localGuardian).forEach(key => {
+      const localGuardianKey = `guardian.${key}`; // localGuardian.key
+
+      // append to updatedStduent
+      (updateStudent as any)[localGuardianKey] =
+        localGuardian[key as keyof typeof localGuardian];
+    });
+  }
+
+  const result = await Student.findOneAndUpdate({ _id: id }, updatedStudent, {
     new: true,
   }).populate(['academicSemester', 'academicDepartment', 'academicFaculty']);
 
