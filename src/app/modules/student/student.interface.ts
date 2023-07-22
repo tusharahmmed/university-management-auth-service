@@ -14,8 +14,8 @@ export type IStudentFilters = {
 
 export type UserName = {
   firstName: string;
+  middleName?: string;
   lastName: string;
-  middleName: string;
 };
 
 export type Guardian = {
