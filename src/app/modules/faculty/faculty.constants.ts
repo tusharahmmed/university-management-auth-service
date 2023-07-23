@@ -8,17 +8,22 @@ const SEARCHABLE_FIELD = [
   'name.firstName',
   'name.middleName',
   'name.lastName',
+  'presentAddress',
+  'designation',
 ];
 const FILTERS_FIELD = [
   'searchTerm',
   'id',
+  'designation',
   'bloodGroup',
   'email',
   'contactNo',
   'emergencyContactNo',
+  'academicDepartment',
+  'academicFaculty',
 ];
 
-export const StudentConstant = {
+export const FacultyConstant = {
   GENDER,
   BLOOD_GROUP,
   SEARCHABLE_FIELD,
