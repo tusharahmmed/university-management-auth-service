@@ -10,4 +10,5 @@ export default {
   node_env: process.env.NODE_ENV,
   defalt_student_pass: process.env.DEFAULT_STUDENT_PASS,
   defalt_faculty_pass: process.env.DEFAULT_FACULTY_PASS,
+  defalt_admin_pass: process.env.DEFAULT_ADMIN_PASS,
 };

@@ -5,13 +5,19 @@ import config from '../../../config';
 import ApiError from '../../../errors/ApiError';
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
+import { IAdmin } from '../admin/admin.interface';
+import Admin from '../admin/admin.model';
 import { IFaculty } from '../faculty/faculty.interface';
 import Faculty from '../faculty/faculty.model';
 import { IStudent } from '../student/student.interface';
 import Student from '../student/student.model';
 import { IUser } from './user.interface';
 import User from './user.model';
-import { generateFacultyId, generateStudentId } from './user.utils';
+import {
+  generateAdmnId,
+  generateFacultyId,
+  generateStudentId,
+} from './user.utils';
 
 const createStudent = async (student: IStudent, user: IUser) => {
   // set password
@@ -147,7 +153,70 @@ const createFaculty = async (faculty: IFaculty, user: IUser) => {
 
   return newUserAllData;
 };
+
+// create admin
+const createAdmin = async (admin: IAdmin, user: IUser) => {
+  // set password
+  if (!user.password) {
+    user.password = config.defalt_admin_pass as string;
+  }
+  // set role
+  user.role = 'admin';
+
+  let newUserAllData = null;
+  // initialize session
+  const session = await mongoose.startSession();
+
+  try {
+    // start transaction
+    session.startTransaction();
+    // generate id
+    const id = await generateAdmnId();
+    user.id = id;
+    admin.id = id;
+
+    // create admin
+    const newAdmin = await Admin.create([admin], { session });
+    if (!newAdmin.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Fail to create admin');
+    }
+    // add faculty id as ref into user
+    user.admin = newAdmin[0]._id;
+
+    // create user
+    const newUser = await User.create([user], { session });
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Fail to create user');
+    }
+    newUserAllData = newUser[0];
+
+    // commit & end the session
+    await session.commitTransaction();
+    await session.endSession();
+  } catch (error) {
+    // if error abort & end session
+    await session.abortTransaction();
+    await session.endSession();
+    throw error;
+  }
+
+  // query all populate data
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ id: newUserAllData.id }).populate({
+      path: 'admin',
+      populate: [
+        {
+          path: 'managementDepartment',
+        },
+      ],
+    });
+  }
+
+  return newUserAllData;
+};
 export const UserService = {
   createStudent,
   createFaculty,
+  createAdmin,
 };
