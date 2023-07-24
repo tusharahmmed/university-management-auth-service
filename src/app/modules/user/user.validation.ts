@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { AdminConstant } from '../admin/admin.constant';
 import { FacultyConstant } from '../faculty/faculty.constants';
 import { StudentConstant } from '../student/student.constants';
 
@@ -105,7 +106,43 @@ const createFacultyZodSchema = z.object({
   }),
 });
 
+// admin zod schema
+const createAdminZodSchema = z.object({
+  body: z.object({
+    password: z.string().optional(),
+    // admin
+    admin: z.object({
+      name: nameZodSchema,
+      gender: z.enum([...AdminConstant.GENDER] as [string, ...string[]], {
+        required_error: 'Gender is required',
+      }),
+
+      dateOfBirth: z.string({ required_error: 'Date of birth is required' }),
+      email: z.string({ required_error: 'Email is required' }),
+      contactNo: z.string({ required_error: 'Contact number is required' }),
+      emergencyContactNo: z.string({
+        required_error: 'Emergency contact number is required',
+      }),
+      bloodGroup: z
+        .enum([...AdminConstant.BLOOD_GROUP] as [string, ...string[]])
+        .optional(),
+      presentAddress: z.string({
+        required_error: 'Present address is required',
+      }),
+      permanentAddress: z.string({
+        required_error: 'Permanent address is required',
+      }),
+      designation: z.string({ required_error: 'Designation is required' }),
+      managementDepartment: z.string({
+        required_error: 'Management Department is required',
+      }),
+      profileImage: z.string().optional(),
+    }),
+  }),
+});
+
 export const UserValidation = {
   createStudentZodSchema,
   createFacultyZodSchema,
+  createAdminZodSchema,
 };
