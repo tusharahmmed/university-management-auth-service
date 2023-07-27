@@ -11,4 +11,5 @@ export default {
   defalt_student_pass: process.env.DEFAULT_STUDENT_PASS,
   defalt_faculty_pass: process.env.DEFAULT_FACULTY_PASS,
   defalt_admin_pass: process.env.DEFAULT_ADMIN_PASS,
+  bcrypt_salt_round: process.env.BCRYPT_SALT_ROUNDS,
 };

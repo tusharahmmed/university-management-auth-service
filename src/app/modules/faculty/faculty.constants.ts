@@ -5,6 +5,7 @@ const SEARCHABLE_FIELD = [
   'id',
   'email',
   'contactNo',
+  'emergencyContactNo',
   'name.firstName',
   'name.middleName',
   'name.lastName',
