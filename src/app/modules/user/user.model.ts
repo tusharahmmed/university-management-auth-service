@@ -2,14 +2,18 @@
 import bcrypt from 'bcrypt';
 import { Schema, model } from 'mongoose';
 import config from '../../../config';
-import { IUser, UserModel } from './user.interface';
+import { IUser, IUserMethods, UserModel } from './user.interface';
 
 // 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<IUser, UserModel>(
+const userSchema = new Schema<IUser, UserModel, IUserMethods>(
   {
     id: { type: String, required: true, unique: true },
     role: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: 0 },
+    needsPasswordChange: {
+      type: Boolean,
+      default: true,
+    },
     student: {
       type: Schema.Types.ObjectId,
       ref: 'Student',
@@ -31,6 +35,28 @@ const userSchema = new Schema<IUser, UserModel>(
   },
 );
 
+// instance methods
+// check user registered
+userSchema.methods.isUserExist = async function (
+  id: string,
+): Promise<Partial<IUser> | null> {
+  const user = await User.findOne(
+    { id },
+    { id: 1, password: 1, needsPasswordChange: 1, role: 1 },
+  );
+
+  return user;
+};
+// match password
+userSchema.methods.isPasswordMatched = async function (
+  givenPassword,
+  savedPassword,
+) {
+  const matchedResult = await bcrypt.compare(givenPassword, savedPassword);
+  return matchedResult;
+};
+
+// pre hooks
 userSchema.pre('save', async function (next) {
   // hass password
   const user = this;

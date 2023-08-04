@@ -27,6 +27,10 @@ export const studentSchema = new Schema<IStudent, StudentModel>(
         message: '{VALUE} as gender is not supported',
       },
     },
+    dateOfBirth: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       unique: true,
